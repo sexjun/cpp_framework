@@ -1,6 +1,13 @@
 #include "toolHead.h"
+#include <gtest/gtest.h>
+
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
+
 #include <iostream>
 #include <thread>
+#include <vector>
+#include <string>
 
 static void logInit() {
     spdlog::cfg::load_env_levels();
@@ -9,7 +16,6 @@ static void logInit() {
     return;
 }
 
-#include <gtest/gtest.h>
 
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions) {
@@ -19,15 +25,49 @@ TEST(HelloTest, BasicAssertions) {
   EXPECT_EQ(7 * 6, 42);
 }
 
-int main(int argc, char** argv) {
-    thread t1(logInit);
-    t1.join();
-    std::cout << "Hello, world!\n";
-    toolHeadTest();
+void initGoogleTest()
+{
+    // ::testing::InitGoogleTest(1, 0);
+    // RUN_ALL_TESTS();
+}
+
+void initLogSystem()
+{
     logInit();
     spdlog::set_level(spdlog::level::info); // Set global log level to info
     spdlog::debug("This message should not be displayed!");
     spdlog::set_level(spdlog::level::trace); // Set specific logger's log level
-    spdlog::debug("This message should be displayed..");::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    spdlog::debug("This message should be displayed..");
+}
+
+int json_test(vector<int> &hash_list, vector<string> &string_list)
+{
+    // read a JSON file
+    std::ifstream i("../res/test.json");
+    json file_json_obj;
+    if(i.is_open()) {
+        i >> file_json_obj;
+    } else {
+        error("file not fonud");
+    }
+    for(int i = 0; i < file_json_obj.size(); i++) {
+        hash_list.push_back(file_json_obj.at(0)["hash_value"]);
+        string_list.push_back(file_json_obj.at(0)["string_value"]);
+    }
+    debug("json map size : {}", file_json_obj.size());
+
+    std::ofstream o("../res/test_3.json");
+    o << std::setw(4) << file_json_obj << std::endl;
+    o << "end";
+    o.close();
+    return 1;
+}
+
+int main(int argc, char** argv) {
+
+    toolHeadTest();
+    vector<int> hash_list;
+    vector<string> string_list;
+    json_test(hash_list, string_list);
+    return 1;
 }

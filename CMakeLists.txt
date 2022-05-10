@@ -16,6 +16,10 @@ endif()
 # googletest部分的配置
 add_subdirectory(lib/googtest)
 
+# json的cmake部分配置
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(lib/json)
+
 # 最终主项目的设置
 include_directories(./include)
 aux_source_directory(./src SRC_DIR)
@@ -25,6 +29,7 @@ target_link_libraries(cpp_framework
 PRIVATE
 spdlog::spdlog
 gtest_main
+nlohmann_json::nlohmann_json
 )
 message(STATUS "SRC_DIR: ${SRC_DIR}")
 
