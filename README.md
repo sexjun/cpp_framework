@@ -6,7 +6,7 @@
 
 1. 日志库：spdlog
 2. 测试库：Google test
-3. json库：
-4. xml库：
+3. json库：josn
+4. xml库：tinyxml2
 5. 序列化：
 6. 

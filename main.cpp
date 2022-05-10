@@ -4,6 +4,9 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
+#include "tinyxml2.h"
+using namespace tinyxml2;
+
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -63,11 +66,36 @@ int json_test(vector<int> &hash_list, vector<string> &string_list)
     return 1;
 }
 
+int initXml()
+{
+    	static const char* xml =
+		"<?xml version=\"1.0\"?>"
+		"<!DOCTYPE PLAY SYSTEM \"play.dtd\">"
+		"<PLAY>"
+		"<TITLE>A Midsummer Night's Dream</TITLE>"
+		"</PLAY>";
+
+	XMLDocument doc;
+	doc.Parse( xml );
+
+	XMLElement* titleElement = doc.FirstChildElement( "PLAY" )->FirstChildElement( "TITLE" );
+	const char* title = titleElement->GetText();
+	printf( "Name of play (1): %s\n", title );
+
+	XMLText* textNode = titleElement->FirstChild()->ToText();
+	title = textNode->Value();
+	printf( "Name of play (2): %s\n", title );
+
+	return doc.ErrorID();
+    return 1;
+}
+
 int main(int argc, char** argv) {
 
     toolHeadTest();
     vector<int> hash_list;
     vector<string> string_list;
     json_test(hash_list, string_list);
+    initXml();
     return 1;
 }

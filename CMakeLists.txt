@@ -20,6 +20,9 @@ add_subdirectory(lib/googtest)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(lib/json)
 
+# tinyxml2的cmake设置
+add_subdirectory(lib/tinyxml2)
+
 # 最终主项目的设置
 include_directories(./include)
 aux_source_directory(./src SRC_DIR)
@@ -30,6 +33,7 @@ PRIVATE
 spdlog::spdlog
 gtest_main
 nlohmann_json::nlohmann_json
+tinyxml2
 )
 message(STATUS "SRC_DIR: ${SRC_DIR}")
 
