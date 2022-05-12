@@ -80,11 +80,11 @@ int initXml()
 
 	XMLElement* titleElement = doc.FirstChildElement( "PLAY" )->FirstChildElement( "TITLE" );
 	const char* title = titleElement->GetText();
-	printf( "Name of play (1): %s\n", title );
+	// printf( "Name of play (1): %s\n", title );
 
 	XMLText* textNode = titleElement->FirstChild()->ToText();
 	title = textNode->Value();
-	printf( "Name of play (2): %s\n", title );
+	// printf( "Name of play (2): %s\n", title );
 
 	return doc.ErrorID();
     return 1;
